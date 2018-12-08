@@ -6,6 +6,11 @@ class DefaultController
 {
     private $twig;
     
+    public function __construct(
+        \Twig_Environment $twig
+        ) {
+            $this->twig = $twig;
+    }
     /**
      * Homepage
      *

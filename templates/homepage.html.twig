@@ -1,21 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} homepage{% endblock %}
+{% block title %}
+{{ parent() }}
+homepage
+{% endblock %}
 
 {% block body %}
 <div class="container">
-	<div class="jumbotron">
-      	<h1 class="display-4">Instant Competition</h1>
-      	<p class="lead">Play Fast</p>
-      	<hr class="my-4">
-      	<p>Chose your competition</p>
-     	<a class="btn btn-primary btn-lg" href="#" role="button">Enter</a>
+	<div class="row">
+		<div class="col-6">
+			<div class="card">
+				<img class="card-img-top" src="../images/join_us.png" alt="Card image cap">
+				<div class="card-body">
+					<p class="card-text">Whant to join us.</p>
+					<a href="#" class="btn btn-primary">Sign In</a>
+				</div>
+			</div>
+		</div>
+		
 	</div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
 
-	
-    
+
+
 {% endblock %}
