@@ -9,11 +9,16 @@ class DefaultController
 {
     private $twig;
     
+    public function __construct(
+        \Twig_Environment $twig
+        ) {
+            $this->twig = $twig;
+    }
     /**
      * Homepage
-     * 
+     *
      * The homepage of the application
-     * 
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="homepage")
      */
