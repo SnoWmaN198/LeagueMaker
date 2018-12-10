@@ -1,0 +1,73 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #455050;
+}
+
+header{
+background-color: #354141;
+margin-bottom: 1rem;
+}
+
+main{
+    color: #ffffff;
+}
+.navbar{
+    background-color: #354141;
+}
+
+.logo{
+    padding: 0;
+}
+
+.tete{
+    display: flex;
+    justify-content: space-between;
+}
+
+.search{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.events{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.events h5{
+    background-color: #293333;
+    text-align: center;
+}
+
+.events .articles{
+    padding-left: 0.5rem;
+    background-color: #354141;
+}
+
+.instantCompetition{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.instantCompetition h5{
+    background-color: #293333;
+    text-align: center;
+}
+
+.instantCompetition .competition{
+    padding-left: 0.5rem;
+    background-color: #354141;
+}
+
+.title{
+    text-align: center;
+    background-color: #293333;
+}
+
+footer{
+    background-color: #354141;
+}
