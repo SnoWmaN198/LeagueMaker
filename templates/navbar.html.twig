@@ -14,7 +14,7 @@
       		</li>
       			<!-- Put admin <li> at the bottom with isgranted ROLE_ADMIN_..? go check documentation -->
       		
-      		{% if !is_granted('ROLE_AUTHENTICATED_FULLY') %}
+      		{% if not is_granted('ROLE_AUTHENTICATED_FULLY') %}
       		<li class="nav-item{% if route == 'register' %} active{% endif %}">
         		<a class="nav-link" href="{{ path("register") }}">Register</a>
       		</li>
