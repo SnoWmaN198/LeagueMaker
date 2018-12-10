@@ -13,8 +13,8 @@ class Competitor
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -24,24 +24,24 @@ class Competitor
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="competitors")
-     */
-    private $user_id;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Competition", inversedBy="competitors")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $competition_id;
+    private $competitionId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Encounter", inversedBy="competitors")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="competitors")
      */
-    private $encounters;
+    private $userId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="competitorId", orphanRemoval=true)
+     */
+    private $scores;
 
     public function __construct()
     {
-        $this->encounters = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -61,51 +61,56 @@ class Competitor
         return $this;
     }
 
-    public function getUserId(): ?User
+    public function getCompetitionId(): ?Competition
     {
-        return $this->user_id;
+        return $this->competitionId;
     }
 
-    public function setUserId(?User $user_id): self
+    public function setCompetitionId(?Competition $competitionId): self
     {
-        $this->user_id = $user_id;
+        $this->competitionId = $competitionId;
 
         return $this;
     }
 
-    public function getCompetitionId(): ?Competition
+    public function getUserId(): ?User
     {
-        return $this->competition_id;
+        return $this->userId;
     }
 
-    public function setCompetitionId(?Competition $competition_id): self
+    public function setUserId(?User $userId): self
     {
-        $this->competition_id = $competition_id;
+        $this->userId = $userId;
 
         return $this;
     }
 
     /**
-     * @return Collection|Encounter[]
+     * @return Collection|Score[]
      */
-    public function getEncounters(): Collection
+    public function getScores(): Collection
     {
-        return $this->encounters;
+        return $this->scores;
     }
 
-    public function addEncounter(Encounter $encounter): self
+    public function addScore(Score $score): self
     {
-        if (!$this->encounters->contains($encounter)) {
-            $this->encounters[] = $encounter;
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setCompetitorId($this);
         }
 
         return $this;
     }
 
-    public function removeEncounter(Encounter $encounter): self
+    public function removeScore(Score $score): self
     {
-        if ($this->encounters->contains($encounter)) {
-            $this->encounters->removeElement($encounter);
+        if ($this->scores->contains($score)) {
+            $this->scores->removeElement($score);
+            // set the owning side to null (unless already changed)
+            if ($score->getCompetitorId() === $this) {
+                $score->setCompetitorId(null);
+            }
         }
 
         return $this;
