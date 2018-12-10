@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<form action="{{ path('login') }}" method="post">
-		<label for ="username">Username:</label>
+	<form action="{{ path('register') }}" method="post">
+		<label for="username">Username:</label>
 		<input type="text" id="username" name="username" value="Hello World"/>
 		<label for="password">Password:</label>
 		<input type="password" id="password" name="password"/>
+		<label for="password_repeat">Repeat password:</label>
+		<input type="password" id="password_repeat" name="password_repeat"/>
 	</form>
 {% endblock %}
