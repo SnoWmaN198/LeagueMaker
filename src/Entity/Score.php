@@ -1,17 +1,15 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- *
  * @ORM\Entity(repositoryClass="App\Repository\ScoreRepository")
  */
 class Score
 {
-
     /**
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
@@ -19,20 +17,17 @@ class Score
     private $id;
 
     /**
-     *
      * @ORM\Column(type="integer", nullable=true)
      */
     private $score;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Encounter", inversedBy="scores")
      * @ORM\JoinColumn(nullable=false)
      */
     private $encounterId;
 
     /**
-     *
      * @ORM\ManyToOne(targetEntity="App\Entity\Competitor", inversedBy="scores")
      * @ORM\JoinColumn(nullable=false)
      */
