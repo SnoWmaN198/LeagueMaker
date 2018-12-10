@@ -13,8 +13,8 @@ class Status
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Status
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="Status_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="statusId")
      */
     private $competitions;
 

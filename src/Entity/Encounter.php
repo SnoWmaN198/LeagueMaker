@@ -13,20 +13,15 @@ class Encounter
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $score1;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $score2;
+    private $label;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -40,17 +35,18 @@ class Encounter
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Competition", inversedBy="encounters")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $competition_id;
+    private $competitionId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Competitor", mappedBy="encounters")
+     * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="encounterId", orphanRemoval=true)
      */
-    private $competitors;
+    private $scores;
 
     public function __construct()
     {
-        $this->competitors = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -58,26 +54,14 @@ class Encounter
         return $this->id;
     }
 
-    public function getScore1(): ?int
+    public function getLabel(): ?string
     {
-        return $this->score1;
+        return $this->label;
     }
 
-    public function setScore1(?int $score1): self
+    public function setLabel(?string $label): self
     {
-        $this->score1 = $score1;
-
-        return $this;
-    }
-
-    public function getScore2(): ?int
-    {
-        return $this->score2;
-    }
-
-    public function setScore2(?int $score2): self
-    {
-        $this->score2 = $score2;
+        $this->label = $label;
 
         return $this;
     }
@@ -108,39 +92,42 @@ class Encounter
 
     public function getCompetitionId(): ?Competition
     {
-        return $this->competition_id;
+        return $this->competitionId;
     }
 
-    public function setCompetitionId(?Competition $competition_id): self
+    public function setCompetitionId(?Competition $competitionId): self
     {
-        $this->competition_id = $competition_id;
+        $this->competitionId = $competitionId;
 
         return $this;
     }
 
     /**
-     * @return Collection|Competitor[]
+     * @return Collection|Score[]
      */
-    public function getCompetitors(): Collection
+    public function getScores(): Collection
     {
-        return $this->competitors;
+        return $this->scores;
     }
 
-    public function addCompetitor(Competitor $competitor): self
+    public function addScore(Score $score): self
     {
-        if (!$this->competitors->contains($competitor)) {
-            $this->competitors[] = $competitor;
-            $competitor->addEncounter($this);
+        if (!$this->scores->contains($score)) {
+            $this->scores[] = $score;
+            $score->setEncounterId($this);
         }
 
         return $this;
     }
 
-    public function removeCompetitor(Competitor $competitor): self
+    public function removeScore(Score $score): self
     {
-        if ($this->competitors->contains($competitor)) {
-            $this->competitors->removeElement($competitor);
-            $competitor->removeEncounter($this);
+        if ($this->scores->contains($score)) {
+            $this->scores->removeElement($score);
+            // set the owning side to null (unless already changed)
+            if ($score->getEncounterId() === $this) {
+                $score->setEncounterId(null);
+            }
         }
 
         return $this;

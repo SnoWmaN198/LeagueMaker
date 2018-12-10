@@ -1,14 +1,13 @@
 <?php
+
 namespace App\Entity;
 
-use Doctrine\Common\Collections\Collection;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- *
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User
 {
@@ -18,163 +17,111 @@ class User
      * @ORM\Column(type="guid")
      */
     private $id;
-    
+
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
-    
+    private $username;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $email;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $salt;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $name;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $email;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="Role")
-     * $ORM\JoinTable(name="users_roles",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
-     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
-     * )
-     */
-    private $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Competition", mappedBy="users")
+     * @ORM\Column(type="string", length=255)
+     */
+    private $password;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $roleId;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="creatorId")
      */
     private $competitions;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competitor", mappedBy="user_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Competitor", mappedBy="userId")
      */
     private $competitors;
-    
+
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
         $this->competitions = new ArrayCollection();
         $this->competitors = new ArrayCollection();
     }
-    
-    /**
-     * @return mixed
-     */
-    public function getId()
+
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getPassword()
+    public function getUsername(): ?string
     {
-        return $this->password;
+        return $this->username;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSalt()
+    public function setUsername(string $username): self
     {
-        return $this->salt;
+        $this->username = $username;
+
+        return $this;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
-    /**
-     * @return \Doctrine\Common\Collections\ArrayCollection
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     *
-     * @param mixed $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-    
-    /**
-     *
-     * @param mixed $salt
-     */
-    public function setSalt($salt)
-    {
-        $this->salt = $salt;
-    }
-    
-    /**
-     *
-     * @param mixed $name
-     */
-    
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-    
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
+
+        return $this;
     }
 
-    /**
-     * @param \Doctrine\Common\Collections\ArrayCollection $roles
-     */
-    public function setRoles($roles)
+    public function getSalt(): ?string
     {
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
+        return $this->salt;
+    }
+
+    public function setSalt(string $salt): self
+    {
+        $this->salt = $salt;
+
         return $this;
     }
-    
-    public function addRole(Role $role)
+
+    public function getPassword(): ?string
     {
-        if (! $this->roles->contains($role)) {
-            $this->roles->add($role);
-        }
-        
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
         return $this;
     }
-    
-    public function removeRole(Role $role)
+
+    public function getRoleId(): ?Role
     {
-        if ($this->role->contains($role)) {
-            $this->roles->removeElement($role);
-        }
-        
+        return $this->roleId;
+    }
+
+    public function setRoleId(?Role $roleId): self
+    {
+        $this->roleId = $roleId;
+
         return $this;
     }
 
@@ -190,7 +137,7 @@ class User
     {
         if (!$this->competitions->contains($competition)) {
             $this->competitions[] = $competition;
-            $competition->addUser($this);
+            $competition->setCreatorId($this);
         }
 
         return $this;
@@ -200,7 +147,10 @@ class User
     {
         if ($this->competitions->contains($competition)) {
             $this->competitions->removeElement($competition);
-            $competition->removeUser($this);
+            // set the owning side to null (unless already changed)
+            if ($competition->getCreatorId() === $this) {
+                $competition->setCreatorId(null);
+            }
         }
 
         return $this;
@@ -236,6 +186,4 @@ class User
 
         return $this;
     }
-
 }
-
