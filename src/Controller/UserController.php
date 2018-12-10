@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
@@ -8,10 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Entity\User;
+use App\Form\UserFormType;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class UserController extends Controller
 {
-    
     /**
      * Register
      *
@@ -21,8 +22,35 @@ class UserController extends Controller
      */    
     public function register(Request $request, EncoderFactoryInterface $encoderFactory, TokenStorageInterface $tokenStorage) 
     {
+        $user = new User();
+        $form = $this->createForm(UserFormType::class, $user, ['standalone' => true]);
         
-        return $this->redirectToRoute('homepage');
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $encoder = $encoderFactory->getEncoder(User::class);
+            
+            $user->setSalt(md5($user->getUsername()));
+            $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+            $role = $user->getRoleId();
+            
+            $user->setPassword($password);
+            $user->setRoleId($role);
+            
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+            
+            $tokenStorage->setToken(
+                new UsernamePasswordToken($user, null, 'main', $user->getRoleId())    
+            );
+            
+            return $this->redirectToRoute('homepage');
+        }
+        
+    return $this->render(
+        'User/register.html.twig',
+        ['formObj' => $form->createView()]
+        );
     }
     
     /**
