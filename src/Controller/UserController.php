@@ -31,10 +31,10 @@ class UserController extends Controller
             
             $user->setSalt(md5($user->getUsername()));
             $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
-            $role = $user->getRoleId();
             
             $user->setPassword($password);
-            $user->setRoleId($role);
+            
+            // user role 
             
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
