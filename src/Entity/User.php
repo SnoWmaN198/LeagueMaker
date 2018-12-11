@@ -21,26 +21,6 @@ class User extends BaseUser
     protected $id;
     
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $username;
-    
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    protected $email;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $salt;
-    
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    protected $password;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
