@@ -16,7 +16,7 @@ class CompetitionFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name', TextType::class)
-            ->add('creationDate', DateType::DEFAULT_FORMAT)
+            ->add('creationDate', DateType::DEFAULT_FORMAT)             // test inside form
             ->add('eventDate', DateType::DEFAULT_FORMAT)
             ->add('image', TextType::class)
             ->add('numberOfPlayers', IntegerType::class);
