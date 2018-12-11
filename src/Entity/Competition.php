@@ -13,8 +13,8 @@ class Competition
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -39,42 +39,53 @@ class Competition
     private $image;
 
     /**
+     * @ORM\Column(type="integer")
+     */
+    private $numberOfPlayers;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Status", inversedBy="competitions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $Status_id;
+    private $statusId;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Type", inversedBy="competitions")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type_id;
+    private $typeId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Encounter", mappedBy="competition_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="competitions")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $encounters;
+    private $creatorId;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="competitions")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User")
      */
-    private $users;
+    private $userId;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Tag", inversedBy="competitions")
      */
-    private $tags;
+    private $tagId;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competitor", mappedBy="competition_id", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Encounter", mappedBy="competitionId", orphanRemoval=true)
+     */
+    private $encounters;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Competitor", mappedBy="competitionId", orphanRemoval=true)
      */
     private $competitors;
 
     public function __construct()
     {
+        $this->userId = new ArrayCollection();
+        $this->tagId = new ArrayCollection();
         $this->encounters = new ArrayCollection();
-        $this->users = new ArrayCollection();
-        $this->tags = new ArrayCollection();
         $this->competitors = new ArrayCollection();
     }
 
@@ -131,26 +142,102 @@ class Competition
         return $this;
     }
 
-    public function getStatusId(): ?Status
+    public function getNumberOfPlayers(): ?int
     {
-        return $this->Status_id;
+        return $this->numberOfPlayers;
     }
 
-    public function setStatusId(?Status $Status_id): self
+    public function setNumberOfPlayers(int $numberOfPlayers): self
     {
-        $this->Status_id = $Status_id;
+        $this->numberOfPlayers = $numberOfPlayers;
+
+        return $this;
+    }
+
+    public function getStatusId(): ?Status
+    {
+        return $this->statusId;
+    }
+
+    public function setStatusId(?Status $statusId): self
+    {
+        $this->statusId = $statusId;
 
         return $this;
     }
 
     public function getTypeId(): ?Type
     {
-        return $this->type_id;
+        return $this->typeId;
     }
 
-    public function setTypeId(?Type $type_id): self
+    public function setTypeId(?Type $typeId): self
     {
-        $this->type_id = $type_id;
+        $this->typeId = $typeId;
+
+        return $this;
+    }
+
+    public function getCreatorId(): ?User
+    {
+        return $this->creatorId;
+    }
+
+    public function setCreatorId(?User $creatorId): self
+    {
+        $this->creatorId = $creatorId;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUserId(): Collection
+    {
+        return $this->userId;
+    }
+
+    public function addUserId(User $userId): self
+    {
+        if (!$this->userId->contains($userId)) {
+            $this->userId[] = $userId;
+        }
+
+        return $this;
+    }
+
+    public function removeUserId(User $userId): self
+    {
+        if ($this->userId->contains($userId)) {
+            $this->userId->removeElement($userId);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tag[]
+     */
+    public function getTagId(): Collection
+    {
+        return $this->tagId;
+    }
+
+    public function addTagId(Tag $tagId): self
+    {
+        if (!$this->tagId->contains($tagId)) {
+            $this->tagId[] = $tagId;
+        }
+
+        return $this;
+    }
+
+    public function removeTagId(Tag $tagId): self
+    {
+        if ($this->tagId->contains($tagId)) {
+            $this->tagId->removeElement($tagId);
+        }
 
         return $this;
     }
@@ -181,58 +268,6 @@ class Competition
             if ($encounter->getCompetitionId() === $this) {
                 $encounter->setCompetitionId(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Tag[]
-     */
-    public function getTags(): Collection
-    {
-        return $this->tags;
-    }
-
-    public function addTag(Tag $tag): self
-    {
-        if (!$this->tags->contains($tag)) {
-            $this->tags[] = $tag;
-        }
-
-        return $this;
-    }
-
-    public function removeTag(Tag $tag): self
-    {
-        if ($this->tags->contains($tag)) {
-            $this->tags->removeElement($tag);
         }
 
         return $this;

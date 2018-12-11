@@ -1,54 +1,83 @@
 <?php
+
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- *
+ * @ORM\Entity(repositoryClass="App\Repository\RoleRepository")
  */
 class Role
 {
-    
     /**
-     *
      * @ORM\Id()
      * @ORM\GeneratedValue(strategy="UUID")
      * @ORM\Column(type="guid")
      */
     private $id;
-    
+
     /**
-     *
      * @ORM\Column(type="string", length=255)
      */
     private $label;
-    
+
     /**
-     *
-     * @return mixed
+     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="roleId")
      */
-    public function getId(): ?string
+    private $users;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
+
+    public function getId(): ?int
     {
         return $this->id;
     }
-    
-    /**
-     *
-     * @return mixed
-     */
-    public function getLabel()
+
+    public function getLabel(): ?string
     {
         return $this->label;
     }
-    
-    /**
-     *
-     * @param mixed $label
-     */
-    public function setLabel($label)
+
+    public function setLabel(string $label): self
     {
         $this->label = $label;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setRoleId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            // set the owning side to null (unless already changed)
+            if ($user->getRoleId() === $this) {
+                $user->setRoleId(null);
+            }
+        }
+
+        return $this;
     }
 }
-

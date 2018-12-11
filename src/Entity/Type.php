@@ -13,8 +13,8 @@ class Type
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -29,7 +29,7 @@ class Type
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="type_id")
+     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="typeId")
      */
     private $competitions;
 

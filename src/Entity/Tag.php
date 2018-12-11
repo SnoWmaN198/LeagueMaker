@@ -13,8 +13,8 @@ class Tag
 {
     /**
      * @ORM\Id()
-     * @ORM\Column(type="guid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @ORM\Column(type="guid")
      */
     private $id;
 
@@ -24,7 +24,7 @@ class Tag
     private $label;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Competition", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Competition", mappedBy="tagId")
      */
     private $competitions;
 
@@ -62,7 +62,7 @@ class Tag
     {
         if (!$this->competitions->contains($competition)) {
             $this->competitions[] = $competition;
-            $competition->addTag($this);
+            $competition->addTagId($this);
         }
 
         return $this;
@@ -72,7 +72,7 @@ class Tag
     {
         if ($this->competitions->contains($competition)) {
             $this->competitions->removeElement($competition);
-            $competition->removeTag($this);
+            $competition->removeTagId($this);
         }
 
         return $this;
