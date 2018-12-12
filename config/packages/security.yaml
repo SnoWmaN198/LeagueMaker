@@ -1,22 +1,22 @@
 security:
     encoders:
-        App\Entity\User:
-            algorithm:          pbkdf2
-            hash_algorithm:     sha512
-            encode_as_base64:   true
-            iterations:         1000
-            key_length:         40 
+        App\Entity\User: bcrypt
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         in_memory: { memory: ~ }
+        fos_userbundle:
+            id: fos_user.user_provider.username
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
             anonymous: true
-
+            form_login:
+                provider: fos_userbundle
+                csrf_token_generator: security.csrf.token_manager
+                
             # activate different ways to authenticate
 
             # http_basic: true
