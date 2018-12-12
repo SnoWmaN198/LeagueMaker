@@ -81,6 +81,16 @@ class Competition
      */
     private $competitors;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $homeVisitor;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $loserBrackets;
+
     public function __construct()
     {
         $this->userId = new ArrayCollection();
@@ -300,6 +310,30 @@ class Competition
                 $competitor->setCompetitionId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHomeVisitor(): ?bool
+    {
+        return $this->homeVisitor;
+    }
+
+    public function setHomeVisitor(bool $homeVisitor): self
+    {
+        $this->homeVisitor = $homeVisitor;
+
+        return $this;
+    }
+
+    public function getLoserBrackets(): ?bool
+    {
+        return $this->loserBrackets;
+    }
+
+    public function setLoserBrackets(bool $loserBrackets): self
+    {
+        $this->loserBrackets = $loserBrackets;
 
         return $this;
     }
