@@ -14,6 +14,7 @@ class AppFixtures extends Fixture
     {
         $this->loadRoles($manager);
         $this->loadStatus($manager);
+        $this->loadType($manager);
         $manager->flush();
     }
 
@@ -54,18 +55,20 @@ class AppFixtures extends Fixture
                 'description'=>'A competition in which each contestant meets all other contestants in turn.'
             ],[
                 'label'=>'Knockout',
-                
-                'description'=>'A competition that eliminates the losers of the round and proceeds to faceOff the winners in the next round'
-            ]
-            'With Groupstage and finals'
+                'description'=>'An elimination tournament'
+            ],[
+                'label'=>'Multistage',
+                'description'=>'A competition with Groupstage and finals'
+            ] 
         ];
 
         foreach ($typeList as $typeArray) {
             $type = new Type();
-            $type->setLabel($typeArray[0]);
-            $type->setDescription($typeArray[1]);
+            $type->setLabel($typeArray['label']);
+            $type->setDescription($typeArray['description']);
             $manager->persist($type);
         }
     }
+    
 }
 
