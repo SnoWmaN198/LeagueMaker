@@ -4,11 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "content-hash": "bbdb8227390da31c0a2fd16bf442ef7d",
-=======
-    "content-hash": "80603f4a4ff34a2f0554ab4769e2ead5",
->>>>>>> UserForms
+    "content-hash": "ce2f5d36ddbc955c26c08e9812cbbf85",
     "packages": [
         {
             "name": "doctrine/annotations",
