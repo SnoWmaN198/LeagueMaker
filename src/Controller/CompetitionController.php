@@ -29,9 +29,6 @@ class CompetitionController extends Controller
             $session->getFlashBag()->add('success', 'The competition was created');
             
             return $this->redirectToRoute('homepage');
-        } else {
-            
-            $session->getFlashBag()->add('warning', 'The competition was not created, please verify your inputs');
         }
         
         return $this->render('Competition/create.html.twig', ['formObj' => $form->createView()]);
