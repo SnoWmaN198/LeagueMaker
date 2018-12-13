@@ -9,24 +9,8 @@ homepage
 <main class="container">
 <section class="row create">
 	<div class="col-sm-12 formComp">
-		<form>
-			<div class="form-group">
-				<legend>Competition</legend>
-				<label for="competitionName">Name</label> <input type="text"
-					class="form-control" id="competitionName" name="competitionName"
-					placeholder="Name competition">
-			</div>
-			<div class="form-group">
-				<label for="typeCompetition">Competition Format: </label> <select
-					class="form-control" id="typeCompetition" name="typeCompetition">
-					<option>Ladder</option>
-					<option>Knockout</option>
-					<option>Round-robin</option>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-success">Create
-				Competition</button>
-		</form>
+	
+		{% include 'bundles/FOSUserBundle/Registration/register_content.html.twig' %}
 	</div>
 </section>
 <hr>
@@ -100,6 +84,8 @@ homepage
 <hr>
 </main>
 {% endblock %}
+
+
 
 {% block javascripts %}
 
