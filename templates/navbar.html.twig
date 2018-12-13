@@ -1,30 +1,17 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div>
-		<ul>
+		<ul style="display:flex">
 			{% set route = app.request.get('_route') %}
-    		<li class="nav-item{% if route == 'create_competition' %} active{% endif %}">
-        		<a class="nav-link" href="{{ path("create_competition") }}">Create a Competition</a>
+    		<li class="nav-item{% if route == 'competition_create' %} active{% endif %}">
+        		<a class="nav-link" href="{{ path('competition_create') }}">Create a Competition</a>
       		</li>
-      			
-  			<li class="nav-item{% if route == 'about' %} active{% endif %}">
-        		<a class="nav-link" href="{{ path("about") }}">About</a>
-      		</li>
-      		
-			  
-			<!--
-      			<li class="nav-item{% if route == 'admin_page' %} active{% endif %}">
-					<a class="nav-link" href="{{ path("admin_page") }}">Admin Panel</a>
-				</li>
-			//Put admin <li> at the bottom with isgranted ROLE_ADMIN_..? go check documentation 
-			-->
-      		
 
       		{% if not is_granted('ROLE_AUTHENTICATED_FULLY') %}
-      		<li class="nav-item{% if route == 'register' %} active{% endif %}">
-        		<a class="nav-link" href="{{ path("register") }}">Register</a>
+      		<li class="nav-item{% if route == 'fos_user_registration_register' %} active{% endif %}">
+        		<a class="nav-link" href="{{ path('fos_user_registration_register') }}">Register</a>
       		</li>
-      		<li class="nav-item{% if route == 'login' %} active{% endif %}">
-        		<a class="nav-link" href="{{ path("login") }}">Login</a>
+      		<li class="nav-item{% if route == 'fos_user_security_login' %} active{% endif %}">
+        		<a class="nav-link" href="{{ path("fos_user_security_login") }}">Login</a>
       		</li>
       		{% endif %}
       		
@@ -33,6 +20,17 @@
         		<a class="nav-link" href="{{ path("logout") }}">Logout</a>
       		</li>
       		{% endif %}
+      		
+  			<li class="nav-item{% if route == 'about' %} active{% endif %}">
+        		<a class="nav-link" href="{{ path("about") }}">About</a>
+      		</li>
     	</ul>
   	</div>
 </nav>
+
+<!--  
+For Admin and 
+https://stackoverflow.com/questions/44137657/different-menu-for-login-user  		 << Preferred version, i think
+https://openclassrooms.com/forum/sujet/fosuserbundle-render-de-login-dans-une-navbar << I like this
+https://stackoverflow.com/questions/35576890/symfony-security-redirect-to-login-page << Hmm...
+-->
