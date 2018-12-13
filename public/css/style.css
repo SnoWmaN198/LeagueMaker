@@ -1,4 +1,6 @@
-
+*{
+	box-sizing: border-box;
+}
 body{
     margin: 0;
     padding: 0;
@@ -70,4 +72,12 @@ main{
 footer{
     background-color: #354141;
     box-shadow: 4px 6px rgb(184, 5, 5);
+    position: absolute;
+   	display: flex;
+   	bottom: 0;
+   	width: 100%;
+}
+
+.login{
+	display: block;
 }

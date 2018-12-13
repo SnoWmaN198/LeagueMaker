@@ -21,12 +21,6 @@ class User extends BaseUser
     protected $id;
     
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $roleId;
-    
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="creatorId")
      */
     private $competitions;
