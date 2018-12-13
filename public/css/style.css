@@ -1,73 +1,62 @@
+ 
+@media (min-width: 300px) and (max-width: 767.98px) {
 
-body{
+    .logo{
+        display: none;
+    }
+}
+@media (min-width: 768px) and (max-width: 991.98px) { 
+
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+    
+ }
+
+ body {
     margin: 0;
     padding: 0;
     background-color: #455050;
 }
 
-header{
-background-color: #354141;
-box-shadow: 4px 6px rgb(184, 5, 5);
-}
 
-main{
+main {
     color: #ffffff;
 }
-.navbar{
+
+.navbar {
     background-color: #455050;
 }
 
-.logo{
-    padding: 0;
+p, h4, h3 {
+    color: #ffffff;
+    text-shadow: rgb(184, 5, 5) 2px 2px 3px;
 }
 
-.col-5 h2, p{
-    text-shadow:rgb(184, 5, 5) 2px 2px 3px;
-}
-
-.tete{
-    display: flex;
-    justify-content: space-between;
-}
-
-.search{
-    display: flex;
-    justify-content: flex-end;
-}
-
-.title h3{
-    box-shadow: 4px 6px rgb(184, 5, 5);
-}
-
-.events .articles{
-    padding-left: 0.5rem;
-    background-color: #354141;
-    box-shadow: 4px 6px rgb(184, 5, 5);
-}
-
-.instantCompetition .competition{
-    background-color: #354141;
-    box-shadow: 4px 6px rgb(184, 5, 5);
-}
-
-.pagination{
-    display: flex;
-    justify-content: space-between;
-    padding-top: 0.2rem;
-    margin-bottom: 0;
-}
-
-.page-item .page-link{
-    background-color: #354141;
-    border-color: #354141;
-}
-
-.title{
+.LoginUser h3{
     text-align: center;
-    background-color: #293333;
 }
-
-footer{
+ header {
     background-color: #354141;
+    margin-bottom: 1rem;
     box-shadow: 4px 6px rgb(184, 5, 5);
 }
+
+.past, .ongoing, .next{
+    background-color: red;
+    margin: 0.2rem;
+
+}
+
+ .carro, .LoginUser{
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: #354141;
+    box-shadow: 4px 6px rgb(184, 5, 5);
+} 
+
+
+
+
