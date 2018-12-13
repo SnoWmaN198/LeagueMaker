@@ -5,6 +5,12 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    mailer_transport:     gmail
+    mailer_encryption:    ssl
+    mailer_host:          localhost
+    mailer_user:          testwf33@gmail.com
+    mailer_password:      league_maker18
+    mailer_auth_mode:     login
 
 services:
     # default configuration for services in *this* file
