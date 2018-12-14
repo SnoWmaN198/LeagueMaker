@@ -30,11 +30,6 @@ class Competitor
     private $competitionId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="competitors")
-     */
-    private $userId;
-
-    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Score", mappedBy="competitorId", orphanRemoval=true)
      */
     private $scores;
@@ -69,18 +64,6 @@ class Competitor
     public function setCompetitionId(?Competition $competitionId): self
     {
         $this->competitionId = $competitionId;
-
-        return $this;
-    }
-
-    public function getUserId(): ?User
-    {
-        return $this->userId;
-    }
-
-    public function setUserId(?User $userId): self
-    {
-        $this->userId = $userId;
 
         return $this;
     }
