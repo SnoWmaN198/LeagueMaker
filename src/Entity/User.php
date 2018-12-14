@@ -87,16 +87,4 @@ class User extends BaseUser
 
         return $this;
     }
-
-    public function getRole(): ?Role
-    {
-        return $this->role;
-    }
-
-    public function setRole(?Role $role): self
-    {
-        $this->role = $role;
-
-        return $this;
-    }
 }
