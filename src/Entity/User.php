@@ -19,16 +19,17 @@ class User extends BaseUser
      * @ORM\Column(type="guid")
      */
     protected $id;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="creatorId")
+     * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="user", orphanRemoval=true)
      */
     private $competitions;
-    
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Competitor", mappedBy="userId")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $competitors;
+    private $role;
     
     public function __construct()
     {
@@ -61,12 +62,7 @@ class User extends BaseUser
     {
         return $this->password;
     }
-    
-    public function getRoleId(): ?Role
-    {
-        return $this->roleId;
-    }
-    
+
     /**
      * @return Collection|Competition[]
      */
@@ -74,58 +70,39 @@ class User extends BaseUser
     {
         return $this->competitions;
     }
-    
+
     public function addCompetition(Competition $competition): self
     {
         if (!$this->competitions->contains($competition)) {
             $this->competitions[] = $competition;
-            $competition->setCreatorId($this);
+            $competition->setUser($this);
         }
-        
+
         return $this;
     }
-    
+
     public function removeCompetition(Competition $competition): self
     {
         if ($this->competitions->contains($competition)) {
             $this->competitions->removeElement($competition);
             // set the owning side to null (unless already changed)
-            if ($competition->getCreatorId() === $this) {
-                $competition->setCreatorId(null);
+            if ($competition->getUser() === $this) {
+                $competition->setUser(null);
             }
         }
-        
+
         return $this;
     }
-    
-    /**
-     * @return Collection|Competitor[]
-     */
-    public function getCompetitors(): Collection
+
+    public function getRole(): ?Role
     {
-        return $this->competitors;
+        return $this->role;
     }
-    
-    public function addCompetitor(Competitor $competitor): self
+
+    public function setRole(?Role $role): self
     {
-        if (!$this->competitors->contains($competitor)) {
-            $this->competitors[] = $competitor;
-            $competitor->setUserId($this);
-        }
-        
-        return $this;
-    }
-    
-    public function removeCompetitor(Competitor $competitor): self
-    {
-        if ($this->competitors->contains($competitor)) {
-            $this->competitors->removeElement($competitor);
-            // set the owning side to null (unless already changed)
-            if ($competitor->getUserId() === $this) {
-                $competitor->setUserId(null);
-            }
-        }
-        
+        $this->role = $role;
+
         return $this;
     }
 }
