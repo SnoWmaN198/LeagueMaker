@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+{{ parent() }}
+homepage
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+	{% include 'bundles/FOSUserBundle/Registration/register_content.html.twig' %}
+
+</div>
+{% endblock %}
+
+{% block javascripts %}
+
+
+
+{% endblock %}
