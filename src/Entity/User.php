@@ -67,13 +67,6 @@ class User extends BaseUser
         return $this->roleId;
     }
     
-    public function setRoleId(?Role $roleId): self
-    {
-        $this->roleId = $roleId;
-        
-        return $this;
-    }
-    
     /**
      * @return Collection|Competition[]
      */
