@@ -20,18 +20,10 @@ class User extends BaseUser
      */
     protected $id;
 
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Competition", mappedBy="user", orphanRemoval=true)
-
      */
     private $competitions;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Role", inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $role;
     
     public function __construct()
     {
