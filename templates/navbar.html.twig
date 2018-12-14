@@ -3,9 +3,6 @@
 	<div>
 		<ul style="display:flex">
 			{% set route = app.request.get('_route') %}
-    		<li class="nav-item{% if route == 'competition_create' %} active{% endif %}">
-        		<a class="nav-link" href="{{ path('competition_create') }}">Create a Competition</a>
-      		</li>
 
       		{% if not is_granted('ROLE_AUTHENTICATED_FULLY') %}
       		<li class="nav-item{% if route == 'fos_user_registration_register' %} active{% endif %}">

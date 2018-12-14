@@ -3,14 +3,8 @@
 {% block body %}
 <main class="container">
 <div class="row create">
-{{ form_start(formObj) }}
-    {{ form_errors(formObj) }}
-    {{ form_row(formObj.name, { 'label': 'Name of Competition' }) }}
-    {{ form_row(formObj.eventDate) }}
-    {{ form_row(formObj.numberOfPlayers, { 'label': 'Number of Players/Teams ' }) }}
-    {{ form_row(formObj.submit, { 'label': 'Submit me' }) }}
-{{ form_end(formObj) }}
 </div>
 </main>
+
 {% endblock %}
 
