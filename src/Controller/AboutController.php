@@ -10,8 +10,10 @@ class AboutController extends Controller
  
     public function theGenerator(MatchupGenerator $theMachine)
     {
+        $encouters=[];
         $competitorList = ['safir','alves','ricardo','fabio'];
-        
+        $encounters=$theMachine->createLeague($competitorList);
+        return $encounters;
         
     }
 
@@ -22,6 +24,8 @@ class AboutController extends Controller
      */
     public function about()
     {
-        return $this->render('about.html.twig');
+        $theMachine = new MatchupGenerator();
+        $encounters = $this->theGenerator($theMachine); 
+        return $this->render('about.html.twig',['encounters' => $encounters]);
     }
 }

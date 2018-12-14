@@ -16,17 +16,17 @@ class MatchupGenerator
         for ($j = 0; $j < $loopMax; $j ++) {
             $matchDay = [];
             if ($j % 2 == 0) {
-                for ($i = 0; i < ($loopMax - 1) / 2; $i ++) {
+                for ($i = 0; $i < (($loopMax - 1) / 2); $i ++) {
                     array_push($matchDay, [
                         $array[$i],
-                        $array[$loopMax - 1 - i]
+                        $array[$loopMax - 1 - $i]
                     ]);
                 }
             } else {
-                for ($i = $loopMax - 1; $i > ($loopMax - 1) / 2; $i --) {
+                for ($i = $loopMax - 1; $i > (($loopMax - 1) / 2); $i --) {
                     array_push($matchDay, [
                         $array[$i],
-                        $array[$loopMax - 1 - i]
+                        $array[$loopMax - 1 - $i]
                     ]);
                 }
             }
@@ -49,7 +49,7 @@ class MatchupGenerator
                 ]);
             }
             $array = $this->carousel($array, $loopMax);
-            shuffle($array);
+            shuffle($matchDay);
             array_push($encounters, $matchDay);
         }
         return $encounters;
