@@ -18,11 +18,7 @@ class CompetitionFormType extends AbstractType
     {
         $builder->add('name', TextType::class)            
             ->add('eventDate', DateType::class)
-            ->add('image', TextType::class)
-            ->add('numberOfPlayers', IntegerType::class)
-            ->add('typeId', ChoiceType::class, array(
-                'choices' => array('Knockout' => true, 'League' => true)
-            ));
+            ->add('numberOfPlayers', IntegerType::class);
         
         if ($options['standalone']) {
             $builder->add('submit', SubmitType::class);
